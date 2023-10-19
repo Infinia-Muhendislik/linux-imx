@@ -19,8 +19,8 @@
 	usdhc1_pwrseq: usdhc1_pwrseq {
 		compatible = "mmc-pwrseq-simple";
 		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_usdhc1_gpio>;
-		reset-gpios = <&gpio2 10 GPIO_ACTIVE_LOW>;
+		pinctrl-0 = <&pinctrl_usdhc1_pwrseq>;
+		reset-gpios = <&gpio2 8 GPIO_ACTIVE_LOW>;
 	};
 };
 
@@ -42,22 +42,23 @@
 
 &usdhc1 {
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
-	pinctrl-0 = <&pinctrl_usdhc1>, <&pinctrl_wlan>;
-	pinctrl-1 = <&pinctrl_usdhc1_100mhz>, <&pinctrl_wlan>;
-	pinctrl-2 = <&pinctrl_usdhc1_200mhz>, <&pinctrl_wlan>;
+	pinctrl-0 = <&pinctrl_usdhc1>,<&pinctrl_usdhc1_gpio>, <&pinctrl_wlan>;
+	pinctrl-1 = <&pinctrl_usdhc1_100mhz>,<&pinctrl_usdhc1_gpio>, <&pinctrl_wlan>;
+	pinctrl-2 = <&pinctrl_usdhc1_200mhz>,<&pinctrl_usdhc1_gpio>, <&pinctrl_wlan>;
 	bus-width = <4>;
+	max-frequency = <50000000>;
 	keep-power-in-suspend;
 	non-removable;
 	wakeup-source;
 	mmc-pwrseq = <&usdhc1_pwrseq>;
 	fsl,sdio-async-interrupt-enabled;
+	cd-gpios = <&gpio2 7 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
-	wifi_wake_host {
-		compatible = "nxp,wifi-wake-host";
+	wifi@0 {
+		compatible = "microchip,wilc1000";
 		interrupt-parent = <&gpio2>;
-		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-		interrupt-names = "host-wake";
+		interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
 	};
 };
 
@@ -137,7 +138,7 @@
 	pinctrl_wlan: wlangrp {
 		fsl,pins = <
 			MX8MM_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K	0x141
-			MX8MM_IOMUXC_SD1_DATA7_GPIO2_IO9		0x159
+			MX8MM_IOMUXC_SD1_DATA4_GPIO2_IO6		0x159
 		>;
 	};
 };
