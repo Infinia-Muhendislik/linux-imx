@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 config WLAN_VENDOR_MICROCHIP
-	bool "Microchip devices"
+	bool "Microchip devices in INFINIA"
 	default y
 	help
 	If you have a wireless card belonging to this class, say Y.
