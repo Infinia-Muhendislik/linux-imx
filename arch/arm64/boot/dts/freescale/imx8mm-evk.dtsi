@@ -29,6 +29,12 @@
 			line-name = "usb-pwren";
 			default-state = "on";
 		};
+		usb2-power {
+			gpios = <&gpio4 0 GPIO_ACTIVE_HIGH>;
+			output-high;
+			line-name = "usb2-pwren";
+			default-state = "on";
+		};
 		usb-flat {
 			gpios = <&gpio3 19 GPIO_ACTIVE_HIGH>;
 			input;
